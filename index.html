@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Interactive Particle Animation with Elements</title>
+    <title>Interactive Particle Animation</title>
     <style>
         body {
             margin: 0;
             overflow: hidden;
         }
-
+        
         canvas {
             position: absolute;
         }
@@ -31,51 +31,6 @@
         var speed = DEFAULT_SPEED;
         var targetSpeed = DEFAULT_SPEED;
         var particles = [];
-
-        var helloWorld = {
-            x: 0,
-            y: 0,
-            size: 36,
-            color: 'white',
-            originalX: 0,
-            originalY: 0,
-            isMoving: false,
-            moveDuration: 60,
-            moveFrame: 0,
-            moveTargetX: 0,
-            moveTargetY: 0,
-            moveStartX: 0,
-            moveStartY: 0,
-            moveDeltaX: 0,
-            moveDeltaY: 0,
-            changeColor: function() {
-                this.color = getRandomColor();
-            },
-            startMove: function(targetX, targetY) {
-                if (!this.isMoving) {
-                    this.isMoving = true;
-                    this.moveFrame = 0;
-                    this.moveStartX = this.x;
-                    this.moveStartY = this.y;
-                    this.moveTargetX = targetX;
-                    this.moveTargetY = targetY;
-                    this.moveDeltaX = targetX - this.x;
-                    this.moveDeltaY = targetY - this.y;
-                }
-            },
-            updateMove: function() {
-                if (this.isMoving) {
-                    this.moveFrame++;
-                    if (this.moveFrame <= this.moveDuration) {
-                        var progress = this.moveFrame / this.moveDuration;
-                        this.x = this.moveStartX + (this.moveDeltaX * progress);
-                        this.y = this.moveStartY + (this.moveDeltaY * progress);
-                    } else {
-                        this.isMoving = false;
-                    }
-                }
-            }
-        };
 
         window.addEventListener('load', function() {
             canvas = document.getElementById('c');
@@ -107,8 +62,6 @@
 
             document.addEventListener('mousedown', function(e) {
                 targetSpeed = BOOST_SPEED;
-                helloWorld.changeColor();
-                helloWorld.startMove(e.clientX, e.clientY);
             }, false);
 
             document.addEventListener('mouseup', function(d) {
@@ -177,13 +130,6 @@
                 context.closePath();
             }
             context.fill();
-
-            // Update and render "Hello world" element movement
-            helloWorld.updateMove();
-            context.font = helloWorld.size + 'px "Share Tech Mono", monospace';
-            context.fillStyle = helloWorld.color;
-            context.textAlign = 'center';
-            context.fillText('48.20$', helloWorld.x, helloWorld.y);
         }
 
         function randomizeParticle(p) {
@@ -191,15 +137,6 @@
             p.y = Math.random() * canvasHeight;
             p.z = Math.random() * 1500 + 500;
             return p;
-        }
-
-        function getRandomColor() {
-            var letters = '0123456789ABCDEF';
-            var color = '#';
-            for (var i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
         }
 
         /**
